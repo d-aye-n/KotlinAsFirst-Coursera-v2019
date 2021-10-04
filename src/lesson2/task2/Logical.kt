@@ -16,9 +16,11 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Простая
  *
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
- * Определить, счастливое ли заданное число, вернуть true, если это так.
+ * Определить, счастливое ли заданное число, вернуть true, если это так.1533
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean =
+    number / 1000 + number % 1000 / 100 == number % 100 / 10 + number % 10
+
 
 /**
  * Простая
@@ -57,6 +59,10 @@ fun circleInside(
  * Стороны отверстия должны быть параллельны граням кирпича.
  * Считать, что совпадения длин сторон достаточно для прохождения кирпича, т.е., например,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
- * Вернуть true, если кирпич пройдёт
+ * Вернуть true, если кирпич пройдёт 6a 5b 4c 3r 6s
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
+    (a <= r && (b <= s || c <= s)) || (b <= r && (a <= s || c <= s)) || (c <= r && (a <= s || b <= s))
+
+
+

@@ -2,7 +2,7 @@
 
 package lesson3.task1
 
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Пример
@@ -12,7 +12,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -67,15 +67,29 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int = if (n / 10 <= 0) 1 else 1 + digitNumber(n / 10)
 
 /**
  * Простая
  *
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
+ * if
+(n < 3) 1 else
+fib(n - 1) + fib(n - 2)
+
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var fib1 = 1
+    var fib2 = 1
+    var mem: Int
+    for (i in 3..n) {
+        mem = fib1
+        fib1 += fib2
+        fib2 = mem
+    }
+    return fib1
+}
 
 /**
  * Простая
@@ -83,21 +97,43 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var maxi = max(m, n)
+    val mini = min(m, n)
+    while (maxi % mini != 0) {
+        maxi += max(m, n)
+        println(maxi)
+    }
+    return maxi
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var d = 2
+    for (i in 1..n) {
+        if (n % d == 0) break else
+            d += 1
+    }
+    return d
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var d = n - 1
+    for (i in 1..n) {
+        if (n % d == 0) break else
+            d -= 1
+    }
+    return d
+}
 
 /**
  * Простая
@@ -106,7 +142,7 @@ fun maxDivisor(n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean = lcm(m, n) == m * n
 
 /**
  * Простая
@@ -115,7 +151,8 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean = ceil(sqrt(m.toDouble())) <= floor(sqrt(n.toDouble()))
+
 
 /**
  * Средняя
@@ -133,7 +170,17 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var s = 0
+    var x1 = x
+    for (i in 1..99999) {
+        if (x1 == 1) break else
+            s += 1
+        if (x1 % 2 == 0) x1 /= 2 else
+            x1 = 3 * x1 + 1
+    }
+    return s
+}
 
 /**
  * Средняя
@@ -143,8 +190,21 @@ fun collatzSteps(x: Int): Int = TODO()
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю.
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
+ * abs(member) >= eps
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var member = x
+    var result = x
+    var n = 2.0
+    while (abs(member) > eps) {
+        member = -member * x * x / (n * (n + 1))
+        println("sin($x) = $result + $member =")
+        result += member
+        println("= $result")
+        n += 2
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -164,7 +224,15 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var result = 0
+    var b = n
+    while (b > 0) {
+        result = result * 10 + (b % 10)
+        b /= 10
+    }
+    return result
+}
 
 /**
  * Средняя
@@ -175,7 +243,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = revert(n) == n
 
 /**
  * Средняя

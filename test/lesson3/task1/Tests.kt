@@ -69,7 +69,7 @@ class Tests {
         assertEquals(1, digitNumber(7))
         assertEquals(2, digitNumber(10))
         assertEquals(2, digitNumber(99))
-        assertEquals(3, digitNumber(123))
+        assertEquals(8, digitNumber(12345678))
         assertEquals(10, digitNumber(Int.MAX_VALUE))
     }
 
@@ -95,6 +95,8 @@ class Tests {
         assertEquals(8, lcm(2, 8))
         assertEquals(24, lcm(6, 8))
         assertEquals(975, lcm(39, 75))
+        assertEquals(56, lcm(7, 8))
+        assertEquals(77, lcm(7, 11))
         assertEquals(13384091, lcm(1357, 9863))
         assertEquals(1339310349, lcm(13579, 98631))
         assertEquals(2089830349, lcm(23579, 88631))
@@ -220,7 +222,7 @@ class Tests {
         assertTrue(hasDifferentDigits(323))
         assertTrue(hasDifferentDigits(54))
         assertTrue(hasDifferentDigits(222266666))
-        assertFalse(hasDifferentDigits(0))
+        assertFalse(hasDifferentDigits(22))
         assertFalse(hasDifferentDigits(777))
         assertTrue(hasDifferentDigits(31122))
     }

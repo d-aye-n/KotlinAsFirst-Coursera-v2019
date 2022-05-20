@@ -2,8 +2,13 @@
 
 package lesson3.task1
 
+import java.math.BigInteger
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
-
+import kotlin.math.pow
+import kotlin.math.pow
+import kotlin.math.pow
 /**
  * Пример
  *
@@ -12,7 +17,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -67,7 +72,8 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int = if (n / 10 <= 0) 1 else 1 + digitNumber(n / 10)
+fun digitNumberBI(n: BigInteger): Int = if (n / 10.toBigInteger() <= 0.toBigInteger()) 1 else 1 + digitNumberBI(n / 10.toBigInteger())
 
 /**
  * Простая
@@ -75,7 +81,20 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var fib1 = 1
+    var fib2 = 1
+    var mem: Int
+    for (i in 3..n) {
+       mem = fib1
+       fib1 += fib2
+       fib2 = mem
+    }
+    return fib1
+}
+//if
+//                               (n < 3) 1 else
+//    fib(n - 1) + fib(n - 2)
 
 /**
  * Простая
@@ -83,22 +102,42 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
-
+fun lcm(m: Int, n: Int): Int {
+    var maxi = max(m, n)
+    var mini = min(m, n)
+    var d = maxi * mini
+for (i in maxi..d ) {
+if (maxi % mini == 0) break else
+    maxi = maxi + max(m, n)
+}
+    return maxi
+}
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
-
+fun minDivisor(n: Int): Int {
+    var d = 2
+    for (i in 1..n) {
+if (n % d == 0 ) break else
+    d = d + 1
+    }
+    return d
+}
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
-
+fun maxDivisor(n: Int): Int {
+    var d = n-1
+    for (i in 1..n) {
+        if (n % d == 0 ) break else
+            d = d - 1
+    }
+    return d
+}
 /**
  * Простая
  *
@@ -133,7 +172,15 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var s = 0
+    while (x != 1) {
+        s = s + 1
+        if (x % 2 == 0) x/2 else
+            (3 * x + 1)
+    }
+    return s
+}
 
 /**
  * Средняя
@@ -185,7 +232,25 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var p: Double = n.toDouble()
+    var rep = 0
+    var pow = 1
+    while ( p > 1 ) {
+        p = p / 10
+        rep += 1
+        pow = pow * 10
+    }
+    var res = n
+    for (i in 1..rep-1) {
+        if (res / (pow/10).toInt() == (res / (pow/100).toInt()) % 10) {
+            res %= pow/10.toInt()
+            pow /= 10
+        }
+        else return true
+    }
+    return false
+}
 
 /**
  * Сложная
@@ -196,7 +261,34 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+
+fun squareSequenceDigit(n: Int): Int {
+    var listN:BigInteger = 0.toBigInteger()
+    var sq: Int
+    var powNum: Int = 1
+    var res: BigInteger
+    var res2: Int
+    var p1: Int
+
+    for (i in 1..n) {
+        sq = i * i
+        var sqNum: Double = sq.toDouble()
+        do {
+            powNum *= 10
+            sqNum /= 10
+        } while (sqNum >= 1)
+
+        listN = (listN * powNum.toBigInteger()) + sq.toBigInteger()
+        powNum = 1
+
+        if (n <= digitNumberBI(listN)) break
+    }
+    p1 = (10.0.pow(digitNumberBI(listN)-n).toInt())
+    res = listN/(p1).toBigInteger()
+    res = res % 10.toBigInteger()
+    res2 = res.toInt()
+    return res2
+}
 
 /**
  * Сложная

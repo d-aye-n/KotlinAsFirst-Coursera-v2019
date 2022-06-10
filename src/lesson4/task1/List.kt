@@ -3,8 +3,8 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
-import kotlin.math.sqrt
 import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  * Пример
@@ -117,7 +117,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * Модуль пустого вектора считать равным 0.0.
  */
 fun abs(v: List<Double>): Double {
-    var sum: Double = 0.0
+    var sum = 0.0
 
     for (i in v.indices) {
         sum += v[i] * v[i]
@@ -140,6 +140,7 @@ fun mean(list: List<Double>): Double = if (list.isEmpty()) 0.0 else list.sum() /
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
+@Suppress("UNUSED_EXPRESSION")
 fun center(list: MutableList<Double>): MutableList<Double> {
     val mean = mean(list)
 
@@ -159,9 +160,9 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
 fun times(a: List<Int>, b: List<Int>): Int {
-    var res: Int = 0
+    var res = 0
     for (i in a.indices) {
-       res += a[i]*b[i]
+        res += a[i] * b[i]
     }
     return res
 }
@@ -175,9 +176,9 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Значение пустого многочлена равно 0 при любом x.
  */
 fun polynom(p: List<Int>, x: Int): Int {
-    var res: Double = 0.0
-    for (i in 0..p.size-1) {
-        res = res + p[i]*(x.toDouble().pow(i))
+    var res = 0.0
+    for (i in 0 until p.size) {
+        res += p[i] * (x.toDouble().pow(i))
         println(res)
     }
     return res.toInt()
@@ -193,7 +194,14 @@ fun polynom(p: List<Int>, x: Int): Int {
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> {
+    var a = 0
+    for (i in list.indices) {
+        a += list[i]
+        list[i] = a
+    }
+    return list
+}
 
 /**
  * Средняя
@@ -224,6 +232,7 @@ fun factorize(n: Int): List<Int> {
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
 fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
+
 /**
  * Средняя
  *
@@ -231,7 +240,17 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var n1: Int = n
+    var el: Int
+    val result: MutableList<Int> = mutableListOf()
+    do {
+        el = n1 % base
+        result.add(0, el)
+        n1 /= base
+    } while (n1 != 0)
+    return result
+}
 
 /**
  * Сложная
@@ -244,7 +263,13 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val alph = "abcdefghijklmnopqrstuvwxyz"
+    val res: String = convert(n, base).map {
+        if (it > 9) alph[it - 10] else it
+    }.joinToString(separator = "")
+    return res
+}
 
 /**
  * Средняя
